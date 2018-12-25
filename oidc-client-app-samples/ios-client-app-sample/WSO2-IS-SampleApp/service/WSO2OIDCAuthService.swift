@@ -27,6 +27,7 @@ class WSO2OIDCAuthService {
     
     // Configuration Properties
     var clientId: String?
+    var clientSecret: String?
     var issuerURLStr: String?
     var redirectURLStr: String?
     var authURLStr: String?
@@ -70,12 +71,14 @@ class WSO2OIDCAuthService {
         self.config = OIDServiceConfiguration(authorizationEndpoint: authURL!, tokenEndpoint: tokenURL!)
         
         // Generate authorization request with PKCE
-        let authRequest = OIDAuthorizationRequest(configuration: config!,
-                                                  clientId: clientId!,
-                                                  scopes: [Constants.OAuthReqConstants.kScope],
-                                                  redirectURL: redirectURL!,
-                                                  responseType: OIDResponseTypeCode,
-                                                  additionalParameters: nil)
+//        let authRequest = OIDAuthorizationRequest(configuration: config!,
+//                                                  clientId: clientId!,
+//                                                  scopes: [Constants.OAuthReqConstants.kScope],
+//                                                  redirectURL: redirectURL!,
+//                                                  responseType: OIDResponseTypeCode,
+//                                                  additionalParameters: nil)
+        
+        let authRequest = OIDAuthorizationRequest(configuration: config!, clientId: clientId!, clientSecret: clientSecret!, scopes: [Constants.OAuthReqConstants.kScope], redirectURL: redirectURL!, responseType: OIDResponseTypeCode, additionalParameters: nil)
         
         // Perform authorization
         appDelegate.externalUserAgentSession = OIDAuthState.authState(byPresenting: authRequest,
@@ -345,7 +348,7 @@ class WSO2OIDCAuthService {
             logoutURLStr = configFileDictionaryContent.object(forKey:
                 Constants.OAuthReqConstants.kLogoutURLPropKey) as? String
         }
-        
+        clientSecret = "zaHFc2U4Kt0PrvrODxx3vxize5ca"
     }
     
 }
